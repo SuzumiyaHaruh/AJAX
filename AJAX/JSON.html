@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSON</title>
+    <style>
+        #result {
+            width: 200px;
+            height: 100px;
+            border: 1px solid #90b;
+        }
+    </style>
+</head>
+<body>
+<div id="result"></div>
+</body>
+<script>
+    const result = document.getElementById('result')
+    document.addEventListener('click', function () {
+        // 实例化
+        const xhr = new XMLHttpRequest();
+        //自动转换,设置响应类型
+        xhr.responseType = 'json';
+        // 初始化
+        xhr.open('GET', 'http://127.0.0.1:8000/json-server')
+        // 事件绑定
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status >= 200 && xhr.status < 300) {
+
+                    // const name=JSON.parse(xhr.response)
+                    // result.innerHTML = name.name;
+                    result.innerHTML = xhr.response.name;
+                }
+            }
+        }
+        xhr.send();
+    })
+</script>
+</html>

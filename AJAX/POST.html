@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>POST</title>
+    <style>
+        #result {
+            width: 200px;
+            height: 100px;
+            border: 1px solid #90b;
+        }
+    </style>
+</head>
+<body>
+<div id="result"></div>
+</body>
+<script>
+    const result = document.getElementById('result');
+    result.addEventListener('mouseenter', function () {
+        // 1。创建对象
+        const xhr = new XMLHttpRequest()
+        //2. 初始化
+        xhr.open('POST', 'http://127.0.0.1:8000/server?');
+        // 3.事件绑定，监控状态的改变
+        xhr.onreadystatechange = function () {
+            // 判断状态值
+            if (xhr.readyState === 4) {
+                // 判断状态码
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    result.innerHTML = xhr.response;
+                }
+            }
+        }
+        xhr.send();
+    })
+</script>
+</html>

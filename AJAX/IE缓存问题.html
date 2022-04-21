@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IE缓存问题</title>
+    <style>
+        #result {
+            width: 200px;
+            height: 100px;
+            border: 1px solid #90b;
+        }
+    </style>
+</head>
+<body>
+<button>点击发送请求</button>
+<div id="result"></div>
+<script>
+    const btn = document.getElementsByTagName('button')[0];
+    const result = document.getElementById('result');
+    //绑定事件
+    btn.onclick = function () {
+        // 要完整实现一个AJAX异步调用和局部刷新,通常需要以下几个步骤:
+        //
+        // 1.建立XMLHttpRequest对象;
+        // 2.设置回调函数;
+        // 3.配置请求信息，(如open,get方法)，使用open方法与服务器建立链接;
+        // 4.向服务器发送数据;
+        // 5.在回调函数中针对不同的响应状态进行处理;
+        // 实例化请求对象
+        // ajax中的五种状态码:
+        // 0：请求未初始化
+        // 1：服务器连接已建立(已调用open方法，但还未调用send)
+        // 2：请求已接收(已调用send方法)
+        // 3：请求处理中(请求已到达服务端，正在处理)
+        // 4：请求已完成，且响应已就绪
+        // -----1.创建XMLHttpRequest对象，也就是创建一个异步调用对象
+        const xhr = new XMLHttpRequest();
+        // 初始化，设置请求方法和url
+        // -----3. 创建一个新的HTTP请求，并指定该请求的方法、URL及验证信息
+        xhr.open('GET', 'http://127.0.0.1:8000/ie?t='+Date.now());
+        xhr.responseType='json'
+        // 处理服务端返回结果
+        //on当什么。。。时候
+        //readystate是对象中的属性 状态值0，1，2，3，4
+        // change 改变
+        // -----2、设置响应HTTP请求状态变化的函数------5.回调函数对不同状态进行处理
+        xhr.onreadystatechange = function () {
+            // 5.回调函数对不同状态进行处理
+            // 判断服务端返回了所有结果
+            if (xhr.readyState === 4) {
+                // 判断状态值
+                // 200 范围都成功
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    // 响应行
+                    console.log(xhr.status);//状态码
+                    console.log(xhr.statusText);//状态字符串
+                    console.log(xhr.getAllResponseHeaders());//所有响应头
+                    console.log(xhr.response);//响应体
+                    result.innerHTML = xhr.response.name;
+                }
+            }
+        }
+        // ----4.发出请求
+        xhr.send();
+    }
+</script>
+</body>
+</html>
