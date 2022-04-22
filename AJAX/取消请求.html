@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>取消请求</title>
+</head>
+<body>
+<button>确认</button>
+<button>取消</button>
+<script>
+    const btnConfirm = document.getElementsByTagName('button')[0];
+    const btnCancel = document.getElementsByTagName('button')[1];
+    let xhr = null;
+    btnConfirm.addEventListener('click', function () {
+        // 1。创建对象
+        xhr = new XMLHttpRequest()
+        //2. 初始化
+        xhr.open('GET', 'http://127.0.0.1:8000/time-server');
+        // 3.发送
+        xhr.send();
+    })
+    btnCancel.addEventListener('click', function () {
+        // 取消请求
+        xhr.abort();
+    })
+</script>
+</body>
+</html>
